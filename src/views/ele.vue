@@ -90,6 +90,8 @@
 </style>
 
 <script>
+import { replaceFirst } from "@/assets/js/utils.js";
+
 export default {
   data() {
     const item = {
@@ -100,6 +102,9 @@ export default {
     return {
       tableData: Array(20).fill(item)
     };
+  },
+  mounted() {
+    console.log(replaceFirst("SuperMan"));
   }
 };
 </script>
