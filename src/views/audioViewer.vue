@@ -30,7 +30,7 @@ export default {
     },
     getBlob() {
       axios({
-        url: "static/music/周杰伦%20-%20不能说的秘密(正式EP版).mp3",
+        url: `${location.origin}/static/music/周杰伦%20-%20不能说的秘密(正式EP版).mp3`,
         method: "get",
         responseType: "blob" // blob/arraybuffer
       }).then(res => {
@@ -60,7 +60,7 @@ export default {
     },
     getBuff() {
       axios({
-        url: "static/music/周杰伦%20-%20不能说的秘密(正式EP版).mp3",
+        url: `${location.origin}/static/music/周杰伦%20-%20不能说的秘密(正式EP版).mp3`,
         method: "get",
         responseType: "arraybuffer" // blob/arraybuffer
       }).then(res => {
