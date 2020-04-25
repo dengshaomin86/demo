@@ -38,7 +38,7 @@ const live2dFn = {
   createDom() {
     const canvas = document.createElement("canvas");
     canvas.setAttribute("id", "live2d");
-    canvas.setAttribute("width", "600");
+    canvas.setAttribute("width", "360");
     canvas.setAttribute("height", "800");
     canvas.style.position = "fixed";
     canvas.style.right = "0";
