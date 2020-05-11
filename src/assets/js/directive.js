@@ -34,6 +34,19 @@ const directive = {
         };
       }
     });
+    // 修正 ie 浏览器粘贴时换行符后面的内容丢失
+    Vue.directive("iePaste", {
+      bind(el) {
+        el.addEventListener("paste", function(ev) {
+          if (!window.clipboardData) return;
+          const text = window.clipboardData.getData("text") || "";
+          if (!text) return;
+          const val = text.replace(/[\n\r]/g, " ");
+          if (!val) return;
+          window.clipboardData.setData("text", val);
+        });
+      }
+    });
   }
 };
 
