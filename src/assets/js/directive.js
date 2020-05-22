@@ -47,6 +47,27 @@ const directive = {
         });
       }
     });
+    // 自由拖拽
+    Vue.directive("drag", {
+      bind(el) {
+        const dom = el;
+        dom.style.cursor = "move";
+        dom.style.position = "absolute";
+        dom.addEventListener("mousedown", (e) => {
+          const disX = e.clientX - dom.offsetLeft;
+          const disY = e.clientY - dom.offsetTop;
+          document.onmousemove = function (ev) {
+            dom.style.left = ev.clientX - disX + "px";
+            dom.style.top = ev.clientY - disY + "px";
+          };
+          document.onmouseup = function () {
+            document.onmousemove = null;
+            document.onmouseup = null;
+          };
+          return false; // 阻止冒泡事件，禁止选择文字
+        });
+      }
+    });
   }
 };
 
