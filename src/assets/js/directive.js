@@ -64,7 +64,7 @@ const directive = {
             document.onmousemove = null;
             document.onmouseup = null;
           };
-          return false; // 阻止冒泡事件，禁止选择文字
+          e.preventDefault(); // 阻止冒泡事件，禁止选择文字，禁止网页原生图片拖动效果
         });
       }
     });
