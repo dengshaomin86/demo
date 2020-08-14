@@ -37,7 +37,7 @@ const directive = {
     // 修正 ie 浏览器粘贴时换行符后面的内容丢失
     Vue.directive("iePaste", {
       bind(el) {
-        el.addEventListener("paste", function(ev) {
+        el.addEventListener("paste", (ev) => {
           if (!window.clipboardData) return;
           const text = window.clipboardData.getData("text") || "";
           if (!text) return;
@@ -65,6 +65,40 @@ const directive = {
             document.onmouseup = null;
           };
           e.preventDefault(); // 阻止冒泡事件，禁止选择文字，禁止网页原生图片拖动效果
+        });
+      }
+    });
+    // 自动隐藏鼠标
+    Vue.directive("autoHideCursor", {
+      bind(el, binding) {
+        const dom = el;
+        const { cursor } = dom.style;
+        let timeOut = null;
+        const time = binding.arg && !isNaN(binding.arg) && binding.arg;
+        dom.addEventListener("mousemove", (e) => {
+          dom.style.cursor = cursor;
+          clearTimeout(timeOut);
+          timeOut = null;
+          timeOut = setTimeout(() => {
+            dom.style.cursor = "none";
+          }, time || 2000);
+        });
+      }
+    });
+    // 鼠标滚动放大缩小
+    Vue.directive("wheel", {
+      bind(el, binding) {
+        const dom = el;
+        const step = 300;
+        if (dom.nodeName !== "IMG") return;
+        dom.addEventListener("mousewheel", (e) => {
+          // 鼠标向上滚动
+          if (e.wheelDelta > 0) {
+            dom.width += step;
+          } else {
+            if (dom.width > step) dom.width -= step;
+            if (dom.width < 60) dom.width = 60;
+          }
         });
       }
     });
