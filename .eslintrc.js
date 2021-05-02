@@ -6,12 +6,12 @@ module.exports = {
     node: true,
     browser: true
   },
-  extends: ["plugin:vue/essential", "@vue/standard"],
+  extends: ['plugin:vue/essential', '@vue/standard'],
   parserOptions: {
-    parser: "babel-eslint"
+    parser: 'babel-eslint'
   },
   // 配置插件
-  plugins: ["vue"],
+  plugins: ['vue'],
   /**
    * 配置规则：
    * "off"或者0 - 关闭规则
@@ -19,25 +19,25 @@ module.exports = {
    * "error"或者2 - 将规则打开为错误（触发时退出代码为1）
    */
   rules: {
-    "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
-    quotes: [1, "single"],
-    semi: [2, "always"],
-    "space-before-function-paren": 0,
-    "spaced-comment": [0, "never"],
-    "no-unreachable": [0, "never"],
+    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    quotes: [1, 'single'],
+    semi: [2, 'always'],
+    'space-before-function-paren': 0,
+    'spaced-comment': [0, 'never'],
+    'no-unreachable': [0, 'never'],
     indent: 0,
-    "comma-dangle": [
-      "error",
+    'comma-dangle': [
+      'error',
       {
-        arrays: "never",
-        objects: "ignore",
-        imports: "never",
-        exports: "never",
-        functions: "ignore"
+        arrays: 'never',
+        objects: 'ignore',
+        imports: 'never',
+        exports: 'never',
+        functions: 'ignore'
       }
     ],
-    "object-curly-spacing": ["error", "always"] // 解构赋值和导入/导出说明符
+    'object-curly-spacing': ['error', 'always'] // 解构赋值和导入/导出说明符
   },
   // 指定全局变量：true允许覆盖变量、false禁止覆盖
   globals: {
