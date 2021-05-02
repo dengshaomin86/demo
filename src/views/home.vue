@@ -2,7 +2,7 @@
   <div class="home">
     <ul>
       <li v-for="(item, idx) in list" :key="idx">
-        <router-link :to="item">{{item}}</router-link>
+        <router-link :to="item">{{ item }}</router-link>
       </li>
     </ul>
   </div>
@@ -10,11 +10,11 @@
 
 <script>
 export default {
-  name: "home",
+  name: 'home',
   components: {},
   data() {
     return {
-      list: []
+      list: [],
     };
   },
   methods: {
@@ -22,11 +22,11 @@ export default {
       this.getList();
     },
     getList() {
-      this.list = this.$router.options.routes.map(item => item.path);
-    }
+      this.list = this.$router.options.routes.map((item) => item.path);
+    },
   },
   mounted() {
     this.init();
-  }
+  },
 };
 </script>

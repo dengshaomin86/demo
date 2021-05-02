@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: "canvas-t",
+  name: 'canvas-t',
   data() {
     return {};
   },
@@ -16,22 +16,22 @@ export default {
       this.draw();
     },
     draw() {
-      const canvas = document.getElementById("canvas");
-      const context = canvas.getContext("2d");
+      const canvas = document.getElementById('canvas');
+      const context = canvas.getContext('2d');
       this.drawRect(context);
       this.drawPath(context);
       this.drawSmile(context);
     },
     // 绘制矩形
     drawRect(context) {
-      context.fillStyle = "blue";
+      context.fillStyle = 'blue';
       context.fillRect(0, 0, 200, 200); // x,y,width,height 填充矩形
       context.clearRect(60, 60, 80, 80); // 清除矩形区域
       context.strokeRect(70, 70, 60, 60); // 绘制矩形边框
     },
     // 绘制路径
     drawPath(context) {
-      context.fillStyle = "yellow";
+      context.fillStyle = 'yellow';
       context.beginPath(); // 新建一条路径
       context.moveTo(100, 200); // x,y 指定你的起始位置
       context.lineTo(0, 400); // x,y 绘制直线
@@ -55,7 +55,7 @@ export default {
        * @param context
        */
     drawSmile(context) {
-      context.fillStyle = "pink";
+      context.fillStyle = 'pink';
       context.beginPath();
       context.arc(100, 500, 100, 0, Math.PI * 2, true);
       context.moveTo(180, 500); // 用 moveTo 绘制不连续的线

@@ -15,12 +15,12 @@
 
 <script>
   export default {
-    name: "audio-viewer",
+    name: 'audio-viewer',
     data() {
       return {
         animationId: null,
         status: 0,
-        url: `${location.origin}/static/music/world.mp3`,
+        url: `${location.origin}/static/music/world.mp3`
         // url: `${location.origin}/static/music/周杰伦%20-%20不能说的秘密(正式EP版).mp3`,
       };
     },
@@ -31,8 +31,8 @@
       getBlob() {
         axios({
           url: this.url,
-          method: "get",
-          responseType: "blob"
+          method: 'get',
+          responseType: 'blob'
         }).then(res => {
           this.blobToBuffer(res.data);
         }).catch(err => {
@@ -54,8 +54,8 @@
       getBuff() {
         axios({
           url: this.url,
-          method: "get",
-          responseType: "arraybuffer"
+          method: 'get',
+          responseType: 'arraybuffer'
         }).then(res => {
           this.bufferToAudioBuffer(res.data);
         }).catch(err => {
@@ -64,7 +64,7 @@
       },
       // 把 buffer 转 AudioBuffer，否则后面无法赋值
       bufferToAudioBuffer(data) {
-        let audioContext = new AudioContext();
+        const audioContext = new AudioContext();
         audioContext.decodeAudioData(data, (buffer) => {
           this.visualize(audioContext, buffer);
         }, (err) => {
@@ -91,28 +91,28 @@
         this.status = 1;
         // 播放结束事件
         audioBufferSourceNode.onended = () => {
-          console.log("play ended");
+          console.log('play ended');
           this.status = 0;
         };
         this.drawSpectrum(analyser);
       },
       // 绘制
       drawSpectrum(analyser) {
-        const canvas = document.getElementById("canvas");
+        const canvas = document.getElementById('canvas');
         const cwidth = canvas.width;
         const cheight = canvas.height - 2;
         const meterWidth = 10; // 能量条的宽度
         // gap = 2, // 能量条间的间距
         const capHeight = 2;
-        const capStyle = "#fff";
+        const capStyle = '#fff';
         const meterNum = 800 / (10 + 2); // 计算当前画布上能画多少条
         const capYPositionArray = []; ////store the vertical position of hte caps for the preivous frame
-        const ctx = canvas.getContext("2d");
+        const ctx = canvas.getContext('2d');
         // 定义一个渐变样式用于画图
         const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-        gradient.addColorStop(1, "#0f0");
-        gradient.addColorStop(0.5, "#ff0");
-        gradient.addColorStop(0, "#f00");
+        gradient.addColorStop(1, '#0f0');
+        gradient.addColorStop(0.5, '#ff0');
+        gradient.addColorStop(0, '#f00');
         const drawMeter = () => {
           // 从 analyser 中得到此刻的音频中各频率的能量值
           const array = new Uint8Array(analyser.frequencyBinCount);
@@ -160,7 +160,7 @@
           this.animationId = requestAnimationFrame(drawMeter);
         };
         this.animationId = requestAnimationFrame(drawMeter);
-      },
+      }
     },
     mounted() {
       this.init();

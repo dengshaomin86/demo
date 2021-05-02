@@ -59,23 +59,23 @@
 
 <script>
 export default {
-  name: "database",
+  name: 'database',
   data() {
     return {
       tableData: [],
       dialogVisible: false,
-      type: "",
+      type: '',
       form: {
-        _id: "",
-        name: "",
-        sex: "",
-        age: ""
+        _id: '',
+        name: '',
+        sex: '',
+        age: ''
       }
     };
   },
   methods: {
     getList() {
-      axios.get("/database/find").then(res => {
+      axios.get('/database/find').then(res => {
         console.log(res);
         this.tableData = res.data;
       }).catch(err => {
@@ -85,17 +85,17 @@ export default {
 
     addBtn() {
       Object.keys(this.form).forEach(key => {
-        this.form[key] = "";
+        this.form[key] = '';
       });
       this.dialogVisible = true;
-      this.type = "add";
+      this.type = 'add';
     },
 
     add() {
       this.dialogVisible = false;
       const params = JSON.parse(JSON.stringify(this.form));
       delete params._id;
-      axios.get("/database/add", {
+      axios.get('/database/add', {
         params
       }).then(res => {
         console.log(res);
@@ -112,12 +112,12 @@ export default {
         this.form[key] = item[key];
       });
       this.dialogVisible = true;
-      this.type = "modify";
+      this.type = 'modify';
     },
 
     modify() {
       this.dialogVisible = false;
-      axios.get("/database/modify", {
+      axios.get('/database/modify', {
         params: this.form
       }).then(res => {
         console.log(res);
@@ -129,7 +129,7 @@ export default {
     },
 
     removeBtn(item) {
-      axios.get("/database/remove", {
+      axios.get('/database/remove', {
         params: item
       }).then(res => {
         console.log(res);

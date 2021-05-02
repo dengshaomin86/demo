@@ -22,10 +22,10 @@
 
 <script>
 /*global live2dFn*/
-import { models } from "../../public/static/live2d";
+import { models } from '../../public/static/live2d';
 
 export default {
-  name: "live2d",
+  name: 'live2d',
   data() {
     return {
       value: [],
@@ -51,7 +51,7 @@ export default {
         });
       }
       // 获取本地存储
-      const localObj = localStorage.getItem("live2d");
+      const localObj = localStorage.getItem('live2d');
       if (localObj) {
         this.value = [JSON.parse(localObj).name, JSON.parse(localObj).dress];
       }
@@ -59,9 +59,9 @@ export default {
     },
     change(e) {
       const handler = {
-        rolePrev: () => live2dFn.change.role("prev"),
+        rolePrev: () => live2dFn.change.role('prev'),
         roleNext: () => live2dFn.change.role(),
-        dressPrev: () => live2dFn.change.dress("prev"),
+        dressPrev: () => live2dFn.change.dress('prev'),
         dressNext: () => live2dFn.change.dress()
       };
       if (handler[e]) handler[e]();
