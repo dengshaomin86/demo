@@ -1,21 +1,36 @@
 const path = require('path');
+const OptimizeCss = require('optimize-css-assets-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-
-const resolve = dir => {
-  return path.join(__dirname, dir);
-};
-
 const isProduction = process.env.NODE_ENV === 'production';
+const openBundleAnalyzer = false;
+const resolve = dir => path.join(__dirname, dir);
 
 module.exports = {
-  publicPath: '/',
-  lintOnSave: false,
+  publicPath: './',
+  lintOnSave: true,
   // 底层是 webpack-merge，合并配置参数
   configureWebpack: config => {
     // 生产环境配置
     if (!isProduction) return;
     // 可视化分析包大小
-    config.plugins.push(new BundleAnalyzerPlugin());
+    if (openBundleAnalyzer) config.plugins.push(new BundleAnalyzerPlugin());
+    // css 压缩
+    config.plugins.push(new OptimizeCss());
+    // js 压缩
+    config.plugins.push(
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          compress: {
+            drop_debugger: true,
+            drop_console: true // 生产环境自动删除console
+          },
+          warnings: false
+        },
+        sourceMap: false,
+        parallel: true // 使用多进程并行运行来提高构建速度。默认并发运行数：os.cpus().length - 1。
+      })
+    );
   },
   // 底层是 webpack-chain，修改配置参数
   chainWebpack: config => {
@@ -30,18 +45,24 @@ module.exports = {
       minSize: 1000,
       name: true,
       cacheGroups: {
-        vendor: {
-          chunks: 'all',
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
-          minSize: 0,
-          priority: 1
-        },
         elementUI: {
           chunks: 'all',
           test: /[\\/]node_modules[\\/]element-ui[\\/]/,
           name: 'elementUI',
-          priority: 2
+          priority: 1
+        },
+        vendors: {
+          name: 'chunk-vendors',
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          chunks: 'initial'
+        },
+        common: {
+          name: 'chunk-common',
+          minChunks: 2,
+          priority: -20,
+          chunks: 'initial',
+          reuseExistingChunk: true
         }
       }
     });
