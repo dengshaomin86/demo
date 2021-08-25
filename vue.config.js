@@ -3,7 +3,7 @@ const OptimizeCss = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const isProduction = process.env.NODE_ENV === 'production';
-const openBundleAnalyzer = false;
+const openBundleAnalyzer = true;
 const resolve = dir => path.join(__dirname, dir);
 
 module.exports = {
