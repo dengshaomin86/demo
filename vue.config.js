@@ -23,19 +23,31 @@ module.exports = {
         uglifyOptions: {
           compress: {
             drop_debugger: true,
-            drop_console: true // 生产环境自动删除console
+            drop_console: true, // 生产环境自动删除console
           },
-          warnings: false
+          warnings: false,
         },
         sourceMap: false,
-        parallel: true // 使用多进程并行运行来提高构建速度。默认并发运行数：os.cpus().length - 1。
-      })
+        parallel: true, // 使用多进程并行运行来提高构建速度。默认并发运行数：os.cpus().length - 1。
+      }),
     );
   },
   // 底层是 webpack-chain，修改配置参数
   chainWebpack: config => {
     // 设置别名
     config.resolve.alias.set('@', resolve('src')).set('_c', resolve('src/components'));
+
+    config.module
+      .rule('md')
+      .test(/\.md/)
+      .use('vue-loader')
+      .loader('vue-loader')
+      .end()
+      .use('vue-markdown-loader')
+      .loader('vue-markdown-loader/lib/markdown-compiler')
+      .options({
+        raw: true,
+      });
 
     // 生产环境配置
     if (!isProduction) return;
@@ -49,27 +61,27 @@ module.exports = {
           chunks: 'all',
           test: /[\\/]node_modules[\\/]element-ui[\\/]/,
           name: 'elementUI',
-          priority: 1
+          priority: 1,
         },
         vendors: {
           name: 'chunk-vendors',
           test: /[\\/]node_modules[\\/]/,
           priority: -10,
-          chunks: 'initial'
+          chunks: 'initial',
         },
         common: {
           name: 'chunk-common',
           minChunks: 2,
           priority: -20,
           chunks: 'initial',
-          reuseExistingChunk: true
-        }
-      }
+          reuseExistingChunk: true,
+        },
+      },
     });
   },
   productionSourceMap: false,
   // 这里写你调用接口的基础路径，来解决跨域，如果设置了代理，那你本地开发环境的axios的baseUrl要写为 ''，即空字符串
   devServer: {
     // proxy: 'http://test.com/'
-  }
+  },
 };

@@ -1,32 +1,29 @@
 <template>
   <div>
     <h1>vue-markdown</h1>
-    <vue-markdown :source="source"></vue-markdown>
-    <textarea v-model="source"></textarea>
+    <div class="markdown-body">
+      <VueMarkdown />
+    </div>
   </div>
 </template>
 
 <script>
-  import VueMarkdown from 'vue-markdown';
+import VueMarkdown from '@/assets/code.md';
+import 'highlight.js/styles/github.css';
+import 'github-markdown-css';
+// import hljs from 'highlight.js';
 
-  export default {
-    name: 'vue-markdown',
-    components: {
-      VueMarkdown
-    },
-    data() {
-      return {
-        value: '',
-        source: new Date().toLocaleTimeString(),
-        anchorAttrs: {
-          target: '_blank',
-          rel: 'noopener noreferrer nofollow'
-        }
-      };
-    }
-  };
+export default {
+  name: 'vue-markdown',
+  components: {
+    VueMarkdown,
+  },
+  mounted() {
+    // console.log(hljs);
+    // hljs.initHighlightingOnLoad();
+    // hljs.initLineNumbersOnLoad();
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
