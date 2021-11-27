@@ -5,14 +5,12 @@
         <router-link :to="item">{{ item }}</router-link>
       </li>
     </ul>
-    <button @click="changeTheme">changeTheme</button>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Home',
-  components: {},
   data() {
     return {
       list: [],
@@ -21,7 +19,6 @@ export default {
   mounted() {
     this.init();
   },
-  activated() {},
   methods: {
     init() {
       this.getList();
@@ -29,19 +26,21 @@ export default {
     getList() {
       this.list = this.$router.options.routes.map(item => item.path);
     },
-    changeTheme() {
-      document.body.style.setProperty('--bg-color', '#f00');
-      document.body.style.setProperty('--font-color', 'blue');
-    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .home {
+  @include clear-overflow;
   background: $bg-color;
   a {
     color: $font-color;
+  }
+  ul {
+    li {
+      margin: 10px;
+    }
   }
 }
 </style>

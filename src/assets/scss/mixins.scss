@@ -1,0 +1,7 @@
+@mixin clear-overflow() {
+  &:before,
+  &:after {
+    display: table;
+    content: '';
+  }
+}
