@@ -2,5 +2,5 @@
   --bg-color: #ecf5ff;
 }
 
-$bg-color: var(--bg-color);
-$font-color: var(--font-color, #aaa);
+$--color: var(--color, #aaa);
+$--bg-color: var(--bg-color);

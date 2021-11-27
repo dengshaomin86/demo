@@ -177,6 +177,6 @@ export default {
 
 <style scoped lang="scss">
 .wrapper {
-  background: $bg-color;
+  background: $--bg-color;
 }
 </style>

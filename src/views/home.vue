@@ -33,9 +33,9 @@ export default {
 <style lang="scss" scoped>
 .home {
   @include clear-overflow;
-  background: $bg-color;
+  background: $--bg-color;
   a {
-    color: $font-color;
+    color: $--color;
   }
   ul {
     li {

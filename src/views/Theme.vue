@@ -10,8 +10,8 @@ export default {
   name: 'Theme',
   methods: {
     changeTheme() {
+      document.body.style.setProperty('--color', 'blue');
       document.body.style.setProperty('--bg-color', '#f00');
-      document.body.style.setProperty('--font-color', 'blue');
     },
   },
 };

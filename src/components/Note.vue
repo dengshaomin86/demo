@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'Note-210516',
+  name: 'Note',
   props: {
     title: {
       type: String,
