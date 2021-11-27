@@ -22,7 +22,7 @@
 import { models } from '../../public/static/live2d';
 
 export default {
-  name: 'live2d',
+  name: 'Live2d',
   data() {
     return {
       value: [],

@@ -83,22 +83,11 @@
   </el-container>
 </template>
 
-<style>
-.el-header {
-  background-color: #b3c0d1;
-  color: #333;
-  line-height: 60px;
-}
-
-.el-aside {
-  color: #333;
-}
-</style>
-
 <script>
 import { replaceFirst } from '@/utils';
 
 export default {
+  name: 'ElementUIView',
   data() {
     const item = {
       date: '2016-05-02',
@@ -114,3 +103,15 @@ export default {
   },
 };
 </script>
+
+<style>
+.el-header {
+  background-color: #b3c0d1;
+  color: #333;
+  line-height: 60px;
+}
+
+.el-aside {
+  color: #333;
+}
+</style>

@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'canvas-t',
+  name: 'CanvasView',
   data() {
     return {};
   },
@@ -44,19 +44,19 @@ export default {
       context.stroke(); // 通过线条来绘制图形轮廓（空心，不会自动闭合）
     },
     /**
-       * 绘制笑脸
-       * 1. 绘制圆弧 arc(x, y, radius, startAngle, endAngle, anticlockwise)
-       * 画一个以（x,y）为圆心的以radius为半径的圆弧（圆），从startAngle开始到endAngle结束，按照anticlockwise给定的方向（默认为顺时针）来生成。
-       * 2. arcTo(x1, y1, x2, y2, radius)
-       * 根据给定的控制点和半径画一段圆弧，再以直线连接两个控制点。
-       * x,y - 圆心坐标
-       * radius - 半径
-       * startAngle - 开始弧度，以x轴为基准
-       * endAngle - 结束弧度，以x轴为基准
-       * arc() 函数中表示角的单位是弧度，不是角度。角度与弧度的js表达式：弧度=(Math.PI/180)*角度。
-       * anticlockwise - Boolean，为true时，是逆时针方向，否则顺时针方向
-       * @param context
-       */
+     * 绘制笑脸
+     * 1. 绘制圆弧 arc(x, y, radius, startAngle, endAngle, anticlockwise)
+     * 画一个以（x,y）为圆心的以radius为半径的圆弧（圆），从startAngle开始到endAngle结束，按照anticlockwise给定的方向（默认为顺时针）来生成。
+     * 2. arcTo(x1, y1, x2, y2, radius)
+     * 根据给定的控制点和半径画一段圆弧，再以直线连接两个控制点。
+     * x,y - 圆心坐标
+     * radius - 半径
+     * startAngle - 开始弧度，以x轴为基准
+     * endAngle - 结束弧度，以x轴为基准
+     * arc() 函数中表示角的单位是弧度，不是角度。角度与弧度的js表达式：弧度=(Math.PI/180)*角度。
+     * anticlockwise - Boolean，为true时，是逆时针方向，否则顺时针方向
+     * @param context
+     */
     drawSmile(context) {
       context.fillStyle = 'pink';
       context.beginPath();
@@ -69,14 +69,13 @@ export default {
       context.arc(150, 450, 10, 0, Math.PI * 2);
       context.stroke();
       context.fill();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
-  canvas {
-    border: 1px solid #ccc;
-  }
-
+canvas {
+  border: 1px solid #ccc;
+}
 </style>

@@ -39,7 +39,7 @@
 
 <script>
 export default {
-  name: 'database',
+  name: 'Database',
   data() {
     return {
       tableData: [],

@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'audio-viewer',
+  name: 'AudioViewer',
   data() {
     return {
       animationId: null,

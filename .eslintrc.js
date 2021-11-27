@@ -19,9 +19,24 @@ module.exports = {
    * "error"或者2 - 将规则打开为错误（触发时退出代码为1）
    */
   rules: {
+    // 支持在模版中使用 eslint-disable-next-line 等注释
     'vue/comment-directive': 'error',
+    // 定义了的 jsx element 必须使用
     'vue/jsx-uses-vars': 'error',
-    'vue/match-component-file-name': 'warn', // 组件名称必须和文件名一致
+    // 组件名称必须和文件名一致
+    'vue/match-component-file-name': [
+      'error',
+      {
+        extensions: ['jsx', 'vue'],
+        shouldMatchCase: true,
+      },
+    ],
+    // 禁止重复的二级键名
+    'vue/no-dupe-keys': 'error',
+    // 禁止出现重复的属性
+    'vue/no-duplicate-attributes': 'error',
+    // 禁止覆盖保留字
+    'vue/no-reserved-keys': 'error',
     // 组件/实例的选项的顺序
     'vue/order-in-components': [
       'warn',

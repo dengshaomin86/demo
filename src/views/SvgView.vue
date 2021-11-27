@@ -26,7 +26,7 @@
 
 <script>
 export default {
-  name: 'SvgT'
+  name: 'SvgView',
 };
 </script>
 

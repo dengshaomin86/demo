@@ -24,7 +24,7 @@
 import Editor from '@tinymce/tinymce-vue';
 
 export default {
-  name: 'tinymce',
+  name: 'Tinymce',
   components: {
     editor: Editor,
   },

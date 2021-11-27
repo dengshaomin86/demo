@@ -6,7 +6,7 @@
 import SWorker from 'simple-web-worker';
 
 export default {
-  name: 'webworker',
+  name: 'WebWorker',
   mounted() {
     console.log(SWorker);
   },

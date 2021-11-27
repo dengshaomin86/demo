@@ -14,7 +14,7 @@ import 'github-markdown-css';
 // import hljs from 'highlight.js';
 
 export default {
-  name: 'vue-markdown',
+  name: 'Markdown',
   components: {
     VueMarkdown,
   },

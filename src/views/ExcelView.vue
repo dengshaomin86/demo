@@ -9,7 +9,7 @@
 import xlsx from 'xlsx';
 
 export default {
-  name: 'excelView',
+  name: 'ExcelView',
   methods: {
     async change(e) {
       const { files } = e.target;
