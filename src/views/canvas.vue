@@ -11,6 +11,9 @@ export default {
   data() {
     return {};
   },
+  mounted() {
+    this.init();
+  },
   methods: {
     init() {
       this.draw();
@@ -67,9 +70,6 @@ export default {
       context.stroke();
       context.fill();
     }
-  },
-  mounted() {
-    this.init();
   }
 };
 </script>

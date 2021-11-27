@@ -11,10 +11,7 @@
         <el-button @click="change('dressNext')">next</el-button>
       </el-form-item>
       <el-form-item label="select">
-        <el-cascader
-            v-model="value"
-            :options="options"
-            @change="handleChange"></el-cascader>
+        <el-cascader v-model="value" :options="options" @change="handleChange"></el-cascader>
       </el-form-item>
     </el-form>
   </div>
@@ -29,8 +26,11 @@ export default {
   data() {
     return {
       value: [],
-      options: []
+      options: [],
     };
+  },
+  mounted() {
+    this.init();
   },
   methods: {
     init() {
@@ -41,13 +41,13 @@ export default {
         const children = models[key].map(item => {
           return {
             value: item,
-            label: item
+            label: item,
           };
         });
         this.options.push({
           value: key,
           label: key,
-          children
+          children,
         });
       }
       // 获取本地存储
@@ -62,23 +62,20 @@ export default {
         rolePrev: () => live2dFn.change.role('prev'),
         roleNext: () => live2dFn.change.role(),
         dressPrev: () => live2dFn.change.dress('prev'),
-        dressNext: () => live2dFn.change.dress()
+        dressNext: () => live2dFn.change.dress(),
       };
       if (handler[e]) handler[e]();
     },
     handleChange(value) {
       console.log(value);
       live2dFn.load(value[0], value[1]);
-    }
+    },
   },
-  mounted() {
-    this.init();
-  }
 };
 </script>
 
 <style scoped lang="scss">
-  .el-form {
-    margin: 20px;
-  }
+.el-form {
+  margin: 20px;
+}
 </style>

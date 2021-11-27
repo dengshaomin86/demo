@@ -4,11 +4,11 @@ module.exports = {
   // 指定环境
   env: {
     node: true,
-    browser: true
+    browser: true,
   },
   extends: ['plugin:vue/essential', '@vue/standard'],
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: 'babel-eslint',
   },
   // 配置插件
   plugins: ['vue'],
@@ -19,6 +19,35 @@ module.exports = {
    * "error"或者2 - 将规则打开为错误（触发时退出代码为1）
    */
   rules: {
+    'vue/comment-directive': 'error',
+    'vue/jsx-uses-vars': 'error',
+    'vue/match-component-file-name': 'warn', // 组件名称必须和文件名一致
+    // 组件/实例的选项的顺序
+    'vue/order-in-components': [
+      'warn',
+      {
+        order: [
+          'el',
+          'name',
+          'parent',
+          'functional',
+          ['delimiters', 'comments'],
+          ['components', 'directives', 'filters'],
+          'extends',
+          'mixins',
+          'inheritAttrs',
+          'model',
+          ['props', 'propsData'],
+          'data',
+          'computed',
+          'watch',
+          'LIFECYCLE_HOOKS',
+          'methods',
+          ['template', 'render'],
+          'renderError',
+        ],
+      },
+    ],
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     quotes: [1, 'single'],
@@ -34,13 +63,13 @@ module.exports = {
         objects: 'ignore',
         imports: 'never',
         exports: 'never',
-        functions: 'ignore'
-      }
+        functions: 'ignore',
+      },
     ],
-    'object-curly-spacing': ['error', 'always'] // 解构赋值和导入/导出说明符
+    'object-curly-spacing': ['error', 'always'], // 解构赋值和导入/导出说明符
   },
   // 指定全局变量：true允许覆盖变量、false禁止覆盖
   globals: {
-    axios: true
-  }
+    axios: true,
+  },
 };

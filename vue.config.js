@@ -9,6 +9,15 @@ const resolve = dir => path.join(__dirname, dir);
 module.exports = {
   publicPath: './',
   lintOnSave: true,
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: `
+        @import "@/assets/scss/variables.scss";
+        `,
+      },
+    },
+  },
   // 底层是 webpack-merge，合并配置参数
   configureWebpack: config => {
     // 生产环境配置

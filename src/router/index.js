@@ -11,8 +11,8 @@ const defaultRouter = context.keys().map(key => {
     name,
     component: context(key).default,
     meta: {
-      title: name
-    }
+      title: name,
+    },
   };
 });
 
@@ -22,8 +22,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: () => import('../views/home.vue')
+      component: () => import('../views/Home.vue'),
     },
     ...defaultRouter
-  ]
+  ],
 });
