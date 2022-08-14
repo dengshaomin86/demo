@@ -7,7 +7,7 @@
       </li>
     </ul>
 
-    <FilePreview :visible.sync="visible" :file="file" />
+    <FilePreview ref="preview" />
   </div>
 </template>
 
@@ -18,12 +18,6 @@ import FilePreview from '@/components/FilePreview';
 export default {
   name: 'FilePreviewView',
   components: { FilePreview },
-  data() {
-    return {
-      visible: false,
-      file: null,
-    };
-  },
   computed: {
     list() {
       const list = ['/files/example-docx.docx', '/files/example-pdf.pdf', '/files/example-xlsx.xlsx'];
@@ -32,8 +26,7 @@ export default {
   },
   methods: {
     preview(item) {
-      this.file = item;
-      this.visible = true;
+      this.$refs.preview.init({ current: item, list: [item] });
     },
   },
 };

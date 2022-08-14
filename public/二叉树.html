@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+  </head>
+  <body>
+    <div>
+      <ul>
+        <li>请用,(单字节)分割数字,0-999之间的数字</li>
+        <li>">"一个一个节点插入</li>
+        <li>">>"一次性插入所有节点</li>
+        <li>双击节点删除</li>
+      </ul>
+    </div>
+    <div>
+      <input id="numbertext" title="" placeholder="请用,(单字节)分割数字,0-999之间的数字" value="30,25,19,37,35,40,39,34,22,42,36" />
+      <input type="button" value=">" title="增加一个节点" onclick="AddOneNumber()" />
+      <input type="button" value=">>" title="一次性增加所有节点" onclick="AddAllNumber()" />
+    </div>
+    <br />
+    <canvas id="gameView" style="background-color:antiquewhite"> </canvas>
+
+    <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
+    <script>
+      var Node = function(_date, _parent) {
+        this.Data = _date;
+        this.Parent = _parent;
+        this.LeftNode = null;
+        this.RightNode = null;
+      };
+
+      var BinaryTree = function() {
+        this.Root = null; //根节点
+
+        this.Insert = function(insertValue) {
+          if (this.Root == null) {
+            this.Root = new Node(insertValue, null);
+            return;
+          }
+
+          var node = this.Root;
+          while (true) {
+            if (node.Data > insertValue) {
+              if (node.LeftNode == null) {
+                node.LeftNode = new Node(insertValue, node);
+                break;
+              } else {
+                node = node.LeftNode;
+              }
+            } else if (node.Data < insertValue) {
+              if (node.RightNode == null) {
+                node.RightNode = new Node(insertValue, node);
+                break;
+              } else {
+                node = node.RightNode;
+              }
+            } else {
+              break;
+            }
+          }
+        };
+
+        var maxLevel;
+        var level;
+        this.Level = function() {
+          maxLevel = 0;
+          level = 0;
+          return levels(this.Root);
+        };
+
+        function levels(node) {
+          if (node.LeftNode != null) {
+            level++;
+            levels(node.LeftNode);
+          }
+          maxLevel = Math.max(maxLevel, level);
+
+          if (node.RightNode != null) {
+            level++;
+            levels(node.RightNode);
+          }
+          level--;
+          return maxLevel;
+        }
+
+        this.SetPoint = function() {
+          var thisMaxLevel = this.Level();
+          var childQuanty = Math.pow(2, thisMaxLevel);
+
+          this.Root.nodeLevel = 0;
+          this.Root.nodePoint = 0;
+
+          if (this.Root.LeftNode != null) {
+            setPointsLeft(this.Root.LeftNode, (-1 * childQuanty) / 2, 0, thisMaxLevel - 1);
+          }
+
+          if (this.Root.RightNode != null) {
+            setPointsRight(this.Root.RightNode, childQuanty / 2, 0, thisMaxLevel - 1);
+          }
+        };
+
+        function setPointsLeft(node, point, levels, thisMaxLevel) {
+          ++levels;
+          node.nodeLevel = levels;
+          node.nodePoint = point;
+
+          if (node.LeftNode != null) {
+            setPointsLeft(node.LeftNode, point - Math.pow(2, thisMaxLevel - levels), levels, thisMaxLevel);
+          }
+
+          if (node.RightNode != null) {
+            setPointsLeft(node.RightNode, point + Math.pow(2, thisMaxLevel - levels), levels, thisMaxLevel);
+          }
+        }
+
+        function setPointsRight(node, point, levels, thisMaxLevel) {
+          ++levels;
+          node.nodeLevel = levels;
+          node.nodePoint = point;
+
+          if (node.LeftNode != null) {
+            setPointsRight(node.LeftNode, point - Math.pow(2, thisMaxLevel - levels), levels, thisMaxLevel);
+          }
+
+          if (node.RightNode != null) {
+            setPointsRight(node.RightNode, point + Math.pow(2, thisMaxLevel - levels), levels, thisMaxLevel);
+          }
+        }
+
+        this.PreOrder = function(funs) {
+          preOrder(this.Root, funs);
+        };
+
+        function preOrder(node, funs) {
+          funs(node);
+
+          if (node.LeftNode != null) {
+            preOrder(node.LeftNode, funs);
+          }
+
+          if (node.RightNode != null) {
+            preOrder(node.RightNode, funs);
+          }
+        }
+
+        this.Search = function(number) {
+          return search(this.Root, number);
+        };
+
+        function search(node, number) {
+          if (node == null) {
+            return null;
+          }
+
+          if (node.Data > number) {
+            return search(node.LeftNode, number);
+          } else if (node.Data < number) {
+            return search(node.RightNode, number);
+          } else {
+            return node;
+          }
+        }
+
+        this.Remove = function(number) {
+          var node = this.Search(number);
+          if (node != null) {
+            remove.call(this, node);
+          }
+        };
+
+        function remove(node) {
+          var child, parent;
+          if (node.LeftNode != null && node.RightNode != null) {
+            var tempNode = findMin(node.RightNode);
+
+            if (node.Parent == null) {
+              this.Root = tempNode;
+            } else {
+              if (node.Parent.LeftNode == node) {
+                node.Parent.LeftNode = tempNode;
+              } else {
+                node.Parent.RightNode = tempNode;
+              }
+            }
+
+            child = tempNode.RightNode;
+            parent = tempNode.Parent;
+
+            if (parent.Data == node.Data) {
+              parent = tempNode;
+            } else {
+              if (child != null) {
+                child.Parent = parent;
+              }
+              parent.LeftNode = child;
+
+              tempNode.RightNode = node.RightNode;
+              node.RightNode.Parent = tempNode;
+            }
+
+            tempNode.Parent = node.Parent;
+            tempNode.LeftNode = node.LeftNode;
+            node.LeftNode.Parent = tempNode;
+          } else {
+            if (node.LeftNode != null) {
+              child = node.LeftNode;
+            } else {
+              child = node.RightNode;
+            }
+
+            parent = node.Parent;
+
+            if (child != null) {
+              child.Parent = parent;
+            }
+
+            if (parent != null) {
+              if (parent.LeftNode != null && parent.LeftNode.Data == node.Data) {
+                parent.LeftNode = child;
+              } else {
+                parent.RightNode = child;
+              }
+            } else {
+              this.Root = child;
+            }
+          }
+          node = null;
+        }
+
+        this.FindMin = function() {
+          findMin(this.Root);
+        };
+
+        function findMin(node) {
+          if (node.LeftNode == null) {
+            return node;
+          }
+          return findMin(node.LeftNode);
+        }
+
+        this.FindMax = function() {
+          return findMax(this.Root);
+        };
+
+        function findMax(node) {
+          if (node.RightNode == null) {
+            return node;
+          }
+          return findMax(node.RightNode);
+        }
+      };
+    </script>
+    <script>
+      /// <reference path="C:\Users\思远\documents\visual studio 2013\Projects\ApplicationHost\WebApplication1\easeljs-0.8.2.min.js" />
+
+      var gameView = document.getElementById('gameView');
+      var stage = new createjs.Stage(gameView);
+      var height = 50; //节点之间的高
+      var width = 15; //节点之间的宽
+      var tops = 40; //根节点离顶部的距离
+      var foot = 40; //树离底部距离
+      var spacing = 30; //树分别离两边的间距
+
+      var tree = new BinaryTree();
+
+      function AddOneNumber() {
+        var numbertext = document.getElementById('numbertext').value;
+
+        var oneNums = numbertext.match(/[1-9][0-9]{0,2}\,?/);
+        document.getElementById('numbertext').value = numbertext.replace(/[1-9][0-9]{0,2}\,?/, '');
+
+        var num = (oneNums + '').match(/[1-9][0-9]{0,2}/);
+
+        if (num) {
+          tree.Insert(parseInt(num));
+          RenewTreeNode();
+        }
+      }
+
+      function AddAllNumber() {
+        while (true) {
+          AddOneNumber();
+          var numbertext = document.getElementById('numbertext').value;
+          if (!/[1-9][0-9]{0,2}/.test(numbertext)) {
+            break;
+          }
+        }
+      }
+
+      function DeleteNumber(number) {
+        tree.Remove(parseInt(number));
+        RenewTreeNode();
+      }
+
+      function RenewTreeNode(number) {
+        stage.removeAllChildren();
+
+        SetCanvasWidthHeight(tree);
+
+        tree.SetPoint();
+
+        tree.PreOrder(SetPreOrder);
+      }
+
+      function SetCanvasWidthHeight(tree) {
+        var level = tree.Level();
+        gameView.height = height * level + tops + foot;
+        gameView.width = Math.pow(2, level + 1) * width + spacing * 2;
+      }
+
+      function SetPreOrder(node) {
+        var container = CreateNode(node.Data, gameView.width / 2 + width * node.nodePoint, node.nodeLevel * height + parseInt(tops), 'red');
+        stage.addChild(container);
+
+        if (node.Parent != null) {
+          var line = CreateLineTo(
+            gameView.width / 2 + width * node.Parent.nodePoint,
+            node.Parent.nodeLevel * height + parseInt(tops),
+            (node.Data, gameView.width / 2 + width * node.nodePoint),
+            node.nodeLevel * height + parseInt(tops),
+          );
+          stage.addChild(line);
+        }
+        stage.update();
+      }
+
+      //color=gray red yellow blue  black
+      function CreateNode(number, x, y, color) {
+        var textX = 0;
+        if (number < 10) {
+          textX = -5;
+        } else if (number > 9 && number < 100) {
+          textX = -9;
+        } else {
+          textX = -14;
+        }
+        var text = new createjs.Text(number, '16px Arial', '#fff');
+        text.x = textX;
+        text.y = -8;
+
+        var graphics = new createjs.Graphics();
+        graphics.setStrokeStyle(1);
+        graphics.beginStroke(createjs.Graphics.getRGB(0, 0, 255));
+        graphics.beginFill(color);
+        graphics.drawCircle(0, 0, 15);
+        var shape = new createjs.Shape(graphics);
+
+        var container = new createjs.Container();
+        container.x = x;
+        container.y = y;
+        container.addChild(shape, text);
+
+        container.addEventListener('dblclick', function() {
+          DeleteNumber(text.text);
+        });
+
+        return container;
+      }
+
+      function CreateLineTo(fatherNodex, fatherNodey, childrenNodex, childrenNodey) {
+        var sp = new createjs.Shape();
+        sp.graphics
+          .s('blue')
+          .ss(2)
+          .mt(fatherNodex, fatherNodey + 15)
+          .lt(childrenNodex, childrenNodey - 15)
+          .es(); //线
+        return sp;
+      }
+    </script>
+  </body>
+</html>
